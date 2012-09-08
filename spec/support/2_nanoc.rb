@@ -1,5 +1,3 @@
-SITE = 'test-site'
-
 def clean site=SITE
   require 'FileUtils'
   FileUtils.rm_rf site if Dir.exist? site
