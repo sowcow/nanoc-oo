@@ -1,6 +1,7 @@
-def wrap wrap=WRAP, site=SITE
+def wrap
   require 'FileUtils'
-  FileUtils.cp_r "#{wrap}/.", site
+  FileUtils.cp_r "#{WRAP}/.", SITE
+  File.delete "#{SITE}/lib/all.rb"
 end
 
 RSpec.configure do |config|
