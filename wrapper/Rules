@@ -1,7 +1,14 @@
 #!/usr/bin/env ruby
 
 
+# The first matching rule is used:
+
 layout '*', :erb
+
+# layout '/default/', :slim
+# layout '/default/', :haml, format: :html5
+# layout %r{^/_.+/$}, :erb
+# /default/ may be layouts/default.with-any-extension
 
 
 compile '/stylesheet/' do
