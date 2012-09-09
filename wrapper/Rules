@@ -1,1 +1,22 @@
-# wrapped rules
+#!/usr/bin/env ruby
+
+
+layout '*', :erb
+
+
+compile '/stylesheet/' do
+end
+route '/stylesheet/' do
+  '/style.css'
+end
+
+
+compile '*' do
+  unless item.binary?
+    filter :erb
+    layout 'default'
+  end
+end
+route '*' do
+  item.identifier.chop + (item.binary?? ".#{ item[:extension] }" : '/index.html')
+end
