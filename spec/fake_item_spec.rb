@@ -1,5 +1,5 @@
 require 'support/all'
-require File.expand_path "#{WRAP}/lib/all"
+require_lib
 
 describe FakeItem do
   context '#identifier' do
