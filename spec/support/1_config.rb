@@ -1,4 +1,4 @@
-SITE = 'test-site'
+SITE = 'temp-test-site'
 WRAP = 'wrapper'
 
 def require_lib
