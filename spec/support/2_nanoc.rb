@@ -1,11 +1,13 @@
+require 'FileUtils'
+
 def clean site=SITE
-  require 'FileUtils'
   FileUtils.rm_rf site if Dir.exist? site
 end
 
-def start site=SITE
+def start
   clean
-  `nanoc create-site #{site}`
+  #`nanoc create-site #{SITE}`
+  FileUtils.cp_r ORIG, SITE
 end
 
 RSpec.configure do |config|
