@@ -2,6 +2,14 @@ require 'support/all'
 require_lib
 
 describe FakeItem do
+  context '#file' do
+    let(:file){ 'some-file.txt' }
+    
+    it 'is accessible' do
+      FakeItem.new(file).file.should == file
+    end
+  end
+  
   context '#identifier' do
 
     variants = %w[
