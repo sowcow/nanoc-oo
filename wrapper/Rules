@@ -3,21 +3,37 @@
 
 # The first matching rule is used:
 
-layout '*', :erb
-
+# layout '*', :erb
 # layout '/default/', :slim
 # layout '/default/', :haml, format: :html5
 # layout %r{^/_.+/$}, :erb
 # /default/ may be layouts/default.with-any-extension
 
+# all unmatched layouts will be compiled using filter determined by extension:
 
-compile '/stylesheet/' do
+FakeItems.new('layouts').items.each do |item|
+  layout item.identifier, FilterFor[item.file]
 end
-route '/stylesheet/' do
-  '/style.css'
-end
 
 
+# test erb layout:
+compile('/erb_layout_test/'){ layout 'erb_layout_test' }
+route('/erb_layout_test/'){'/erb_layout_test.html'}
+
+# test slim layout:
+compile('/slim_layout_test/'){ layout 'slim_layout_test' }
+route('/slim_layout_test/'){'/slim_layout_test.html'}
+
+
+# compile the rest:
+compile('/'){ layout 'default' }
+route('/'){'/index.html'}
+
+compile('/stylesheet/'){}
+route('/stylesheet/'){'/style.css'}
+
+
+__END__
 compile '*' do
   unless item.binary?
     filter :erb
