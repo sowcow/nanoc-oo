@@ -6,8 +6,7 @@ end
 
 def start
   clean
-  #`nanoc create-site #{SITE}`
-  FileUtils.cp_r ORIG, SITE
+  `nanoc create-site #{SITE}`
 end
 
 RSpec.configure do |config|
