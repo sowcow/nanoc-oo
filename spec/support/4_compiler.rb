@@ -1,7 +1,10 @@
-def compile site=SITE
-  Dir.chdir site do
+def compile
+  Dir.chdir SITE do
     `nanoc compile`
   end
+  crash = File.exist? "#{SITE}/crash.log"
+  FileUtils.cp "#{SITE}/crash.log", 'crash.log' if crash
+  not crash
 end
 
 RSpec.configure do |config|
