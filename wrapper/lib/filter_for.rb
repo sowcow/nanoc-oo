@@ -1,6 +1,6 @@
 module FilterFor
   extend self
-  KNOWN_FILTERS = {}
+  KNOWN_FILTERS = { 'html' => :erb, 'htm' => :erb }
   
   def [] file
     filter_ext File.extname file
