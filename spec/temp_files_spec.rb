@@ -41,5 +41,14 @@ describe TempFiles do
         Dir["#{dir}/**"].count.should == 0
       end  
     end
+    
+    it 'should not raise errors :)' do
+      count.times do |name|
+        TempFiles.create("#{dir}/#{name}"){ name }
+      end
+      Dir["#{dir}/**"].count.should == count
+      rm_rf dir
+      expect { TempFiles.purge }.to_not raise_error
+    end    
   end  
 end

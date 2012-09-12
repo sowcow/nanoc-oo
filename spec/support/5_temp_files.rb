@@ -14,7 +14,7 @@ class TempFiles
   
   def self.purge
     @files.each do |file|
-      File.delete file
+      File.delete file if File.exist? file
     end
     @files = []
   end
