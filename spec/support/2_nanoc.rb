@@ -1,8 +1,13 @@
 require 'FileUtils'
 
-def clean site=SITE
-  FileUtils.rm_rf site if Dir.exist? site
+def clean
+  rm_rf SITE
 end
+
+def rm_rf dir
+  FileUtils.rm_rf dir if Dir.exist? dir
+end
+
 
 def start
   clean

@@ -15,8 +15,7 @@ describe FakeItems do
     end
 
     after :all do
-      require 'FileUtils'
-      FileUtils.rm_rf dir
+      rm_rf dir
     end
 
     it 'should reflect all files in the given directory' do
