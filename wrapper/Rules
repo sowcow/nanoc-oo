@@ -16,16 +16,8 @@ FakeItems.new('layouts').items.each do |item|
 end
 
 
-# test erb layout:
-compile('/erb_layout_test/'){ layout 'erb_layout_test' }
-route('/erb_layout_test/'){'/erb_layout_test.html'}
+# compile default files created by nanoc:
 
-# test slim layout:
-compile('/slim_layout_test/'){ layout 'slim_layout_test' }
-route('/slim_layout_test/'){'/slim_layout_test.html'}
-
-
-# compile the rest:
 compile('/'){ layout 'default' }
 route('/'){'/index.html'}
 
