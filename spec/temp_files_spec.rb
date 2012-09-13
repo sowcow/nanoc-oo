@@ -6,56 +6,48 @@ describe TempFiles do
     TempFiles.purge
   end
   
-  context '#prepend' do
+  context 'file modifications:' do
     let(:name){ 'temp-file-testing-TempFiles.txt' }
     let(:text){ 'text for file' }    
     let(:fragment){ 'fragment to prepend' }    
-   
-    it 'should prepend file with text' do
+    
+    before do
       TempFiles.create name do
         text
-      end
-      
-      TempFiles.prepend name do
-        fragment
-      end
-      
-      File.read(name).should == "#{fragment}#{text}"
-      
-      TempFiles.revert
-      
-      File.read(name).should == text
+      end    
     end
+    
+    context '#prepend' do   
+      it 'should prepend file with text' do
+        TempFiles.prepend name do
+          fragment
+        end
+        File.read(name).should == "#{fragment}#{text}"
+        TempFiles.revert
+        File.read(name).should == text
+      end
+    end
+  
+    context '#prepend_lines' do
+
+      it 'should prepend file with lines and \n if needed' do
+        TempFiles.prepend_lines name do
+          fragment
+        end
+        File.read(name).should == "#{fragment}\n#{text}"
+        TempFiles.revert
+        File.read(name).should == text
+
+        TempFiles.prepend_lines name do
+          fragment + "\n"
+        end
+        File.read(name).should == "#{fragment}\n#{text}"
+        TempFiles.revert
+        File.read(name).should == text
+      end
+    end  
   end
-  
-  context '#prepend_lines' do
-    let(:name){ 'temp-file-testing-TempFiles.txt' }
-    let(:text){ 'text for file' }    
-    let(:fragment){ 'fragment to prepend' }    
    
-    it 'should prepend file with lines' do
-      TempFiles.create name do
-        text
-      end
-      
-      TempFiles.prepend_lines name do
-        fragment
-      end
-      
-      File.read(name).should == "#{fragment}\n#{text}"
-      TempFiles.revert
-      File.read(name).should == text
-
-      TempFiles.prepend_lines name do
-        fragment + "\n"
-      end
-
-      File.read(name).should == "#{fragment}\n#{text}"
-      TempFiles.revert
-      File.read(name).should == text
-    end
-  end  
-  
   context '#create' do
     let(:name){ 'temp-file-testing-TempFiles.txt' }
     let(:text){ 'text for file' }
