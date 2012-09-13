@@ -39,6 +39,6 @@ end
 
 def compile_item item, lay=nil
   lay ||= item
-"compile('/#{item}/'){ layout #{lay} }
+"compile('/#{item}/'){ layout '#{lay}' }
 route('/#{item}/'){'/#{item}/index.html'}"
 end
