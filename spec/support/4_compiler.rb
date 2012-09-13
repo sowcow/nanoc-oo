@@ -9,6 +9,7 @@ end
 
 RSpec.configure do |config|
   config.before(:all) do
+    File.delete 'crash.log' if File.exist? 'crash.log'
     compile
   end
 end
