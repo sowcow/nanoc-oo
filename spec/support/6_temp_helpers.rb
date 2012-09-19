@@ -44,7 +44,7 @@ route('/#{item}/'){'/#{item}/index.html'}"
 end
 
 def prepend_rules
-  TempFiles.prepend "#{SITE}/Rules" do
+  TempFiles.prepend_lines "#{SITE}/Rules" do
     yield
   end
 end
@@ -57,6 +57,10 @@ def compile!
   compile.should == true
 end
 
+def not_compiling!
+  compile.should == false
+end
+
 def prepare_new_item_and_layout!
   before :each do
     create_layout(name, layout_ext){ layout }
@@ -64,7 +68,6 @@ def prepare_new_item_and_layout!
     prepend_rules{ rule }
   end
 
-  let(:metadata){ { 'title' => "Title!" } }
   let(:item_ext){ '.html' };let(:item){ lorem metadata }
   let(:rule){ compile_item name }
 end
