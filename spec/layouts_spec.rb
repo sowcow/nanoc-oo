@@ -2,7 +2,7 @@ require 'support/all'
 require_lib
 
 
-describe 'layouts' do
+describe '=> layouts' do
   let(:name){ 'testing-layout' }
   prepare_new_item_and_layout!
 
