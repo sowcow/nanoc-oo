@@ -29,7 +29,7 @@ describe ItemClass do
   describe '.[identifier]' do
     let(:item){ double(identifier: '/') }  
 
-    it 'should return first class accepting identifier' do
+    it 'should return first class that accept identifier' do
       subject[item].should == @accepting_one
     end
   end
