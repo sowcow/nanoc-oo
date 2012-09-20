@@ -10,6 +10,16 @@ describe FakeItem do
     end
   end
   
+  context '(+self)' do
+    let(:item){ FakeItem.new('foo') } 
+    let(:value){ 123 } 
+    
+    it 'should return self[:object]' do
+      item[:object] = value
+      (+item).should == value
+    end
+  end
+  
   context '#identifier' do
 
     variants = %w[

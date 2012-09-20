@@ -72,3 +72,8 @@ def prepare_new_item_and_layout!
   let(:item_ext){ '.html' };let(:item){ lorem metadata }
   let(:rule){ compile_item name }
 end
+
+def stop!
+  require 'pry'
+  binding.pry
+end

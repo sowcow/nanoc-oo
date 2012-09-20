@@ -25,13 +25,21 @@ compile('/stylesheet/'){}
 route('/stylesheet/'){'/style.css'}
 
 
-__END__
-compile '*' do
-  unless item.binary?
+content_items = FakeItems.new('content').items
+classes = ItemClass.new
+
+content_items.select! do |item|
+  klass = classes[item]
+  item[:object] = klass.new(item) if klass
+end
+
+
+content_items.each do |item|
+  compile (+item).identifier do
     filter :erb
     layout 'default'
   end
-end
-route '*' do
-  item.identifier.chop + (item.binary?? ".#{ item[:extension] }" : '/index.html')
+  route (+item).identifier do
+    (+item).route
+  end  
 end
