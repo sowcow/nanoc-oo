@@ -2,7 +2,7 @@ require 'support/all'
 require_lib
 
 
-describe '=>items configuration through classes', focus do
+describe '=>items configuration through classes' do
 
   before do
     create_item("#{name}.html"){ lorem }
@@ -25,10 +25,9 @@ end"
   context 'routes' do
     specify 'should be configured properly' do
       compile!
-      breakpoint binding
 
       File.should_not exist "#{SITE}/output/#{name}/index.html"
-      File.should exist "#{SITE}/output/#{new_route}/index.html"
+      File.should exist     "#{SITE}/output/#{new_route}/index.html"
     end
   end
 end
