@@ -4,8 +4,9 @@ def create_layout name, ext
   end
 end
 
-def create_item name, ext
-  TempFiles.create "#{SITE}/content/#{name}#{ext}" do
+def create_item name, ext=nil
+  full_name = ext==nil ? name : "#{name}#{ext}"
+  TempFiles.create "#{SITE}/content/#{full_name}" do
     yield
   end
 end
