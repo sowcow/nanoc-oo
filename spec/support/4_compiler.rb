@@ -1,5 +1,6 @@
 def compile
   Dir.chdir SITE do
+    rm_rf 'output'
     `nanoc compile`
   end
   crash = File.exist? "#{SITE}/crash.log"
