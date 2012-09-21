@@ -10,24 +10,37 @@ describe '=>items configuration through classes' do
 "
 class TestingPage < Page
   GOOD_ID = Regexp.new Regexp.escape '/#{name}/'
-  
-  def route
-    '/#{new_route}/index.html'
-  end
+#{configuration}
 end"    
     end
   end
 
   let(:name){ 'teting-items-and-classes' }
-  let(:new_route){ 'test-route-changed.html' }
   
 
   context 'routes' do
-    specify 'should be configured properly' do
+    let :configuration do
+"
+  def route
+    '/#{route}/index.html'
+  end"      
+    end
+    let(:route){ 'test-route-changed' }
+
+    describe 'default value' do
+      let(:configuration){''}
+
+      specify 'should work for .html files' do
+        compile!
+        File.should exist "#{SITE}/output/#{name}/index.html"
+      end
+    end    
+  
+    it 'should be configured properly' do
       compile!
 
       File.should_not exist "#{SITE}/output/#{name}/index.html"
-      File.should exist     "#{SITE}/output/#{new_route}/index.html"
-    end
+      File.should exist     "#{SITE}/output/#{route}/index.html"
+    end 
   end
 end
