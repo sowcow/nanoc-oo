@@ -15,17 +15,18 @@ module PageDefaults
   end
   
   def html?
-    (not binary?) && (not css?)
+    really_html?
   end
   
-  def css?
-    extension.split('.').find { |ext| ext =~ /(css|sass|scss)/ }
-  end
+  def really_html?
+    extension.split('.').find { |ext| ext =~ /^(#{ HTML_EXTENSIONS })$/ } ? true : false
+  end  
   
   def extension
     item[:extension]
   end
   
+  HTML_EXTENSIONS = 'html|htm|slim|haml|md'
   PRIORITY = 0
 end
 
