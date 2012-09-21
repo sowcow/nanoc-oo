@@ -77,3 +77,10 @@ def stop!
   require 'pry'
   binding.pry
 end
+
+def save_png_image file
+  require 'chunky_png'
+  png = ChunkyPNG::Image.new(16, 16, ChunkyPNG::Color::TRANSPARENT)
+  png[1,1] = ChunkyPNG::Color.rgba(10, 20, 30, 128)
+  png.save(file, :interlace => true)
+end
