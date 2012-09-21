@@ -5,13 +5,25 @@ end
 
 module PageDefaults
   def route
-    identifier.chop + (binary?? ".#{ item[:extension] }" : '/index.html')
+    identifier.chop + (!html?? ".#{ item[:extension] }" : '/index.html')
   end
   
   # uses FakeItem#file or NanocItem#[:binary]
   #
   def binary?
     item.respond_to?(:file) ? is_binary_file?(item.file) : item[:binary]
+  end
+  
+  def html?
+    (not binary?) && (not css?)
+  end
+  
+  def css?
+    extension.split('.').find { |ext| ext =~ /(css|sass|scss)/ }
+  end
+  
+  def extension
+    item[:extension]
   end
   
   PRIORITY = 0
