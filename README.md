@@ -7,7 +7,5 @@ also by default files extensions will be used to apply filters to layouts and it
 TODO: refactor temp spec helpers
 
 **?:** `#binary?` through ptools or nanoc config
-**?:** `#html?` = !binary and !css
-
 
 *(to be continued)*
