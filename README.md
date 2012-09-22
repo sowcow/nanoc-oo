@@ -8,6 +8,7 @@ TODO:
  * refactor temp spec helpers
  * refactor specs with true/false variant arrays
  * check coverage
+ * use `context` properly (in specs)
 
 **?:** `#binary?` through ptools or nanoc config
 
