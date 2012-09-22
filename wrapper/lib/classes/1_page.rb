@@ -12,6 +12,7 @@ module PageDefaults
   def compile context
     filter context
     apply_layout context
+    after_compile context
   end
 
   def filter context
@@ -22,8 +23,25 @@ module PageDefaults
   def layout
     self.class::LAYOUT if defined? self.class::LAYOUT
   end
+  def after_compile context
+    context.filter :relativize_paths, type: kind if kind  
+  end
 
-#context.filter :relativize_paths, type: kind if kind  
+  def kind
+    case
+    when html? then :html
+    when css? then :css
+    end
+  end
+  
+  
+  def css?
+    really_css?
+  end
+  
+  def really_css?
+    extension.split('.').find { |ext| ext =~ /^(#{ CSS_EXTENSIONS })$/ } ? true : false
+  end    
 
 
   
@@ -45,6 +63,7 @@ module PageDefaults
     item[:extension]
   end
   
+  CSS_EXTENSIONS = 'css|sass|scss'
   HTML_EXTENSIONS = 'html|htm|slim|haml|md'
   PRIORITY = 0
 end

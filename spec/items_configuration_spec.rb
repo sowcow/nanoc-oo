@@ -144,5 +144,35 @@ end"
         output_file(name).should include '<head>'
       end
     end
+    
+    context 'after compile' do
+    
+      before do
+        create_item("#{ name }.html"){ link % absolute }
+      end
+      
+      let(:path){ 'path.html' }
+      let(:relative){ "../#{path}" }
+      let(:absolute){ "/#{path}" }
+      let(:link){ "<a href='%s'>link!</a>" }
+      
+      context 'by default' do
+        let(:configuration){''}        
+        specify 'paths are relativised' do
+          compile!
+          output_file(name)[/href=['"](.+?)['"]/, 1].should == relative
+        end
+      end
+
+      let :configuration do'
+        def after_compile *a
+        end'
+      end
+      
+      it 'should be configurable' do
+        compile!
+        output_file(name).should include link % absolute
+      end
+    end
   end
 end
