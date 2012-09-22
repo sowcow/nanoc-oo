@@ -8,12 +8,24 @@ module PageDefaults
     identifier.chop + (!html?? ".#{ item[:extension] }" : '/index.html')
   end
   
+  
   def compile context
     filter context
+    apply_layout context
   end
 
   def filter context
   end
+  def apply_layout context
+    context.layout layout if layout
+  end
+  def layout
+    self.class::LAYOUT if defined? self.class::LAYOUT
+  end
+
+#context.filter :relativize_paths, type: kind if kind  
+
+
   
   # uses FakeItem#file or NanocItem#[:binary]
   #

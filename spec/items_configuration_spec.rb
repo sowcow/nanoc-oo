@@ -118,5 +118,31 @@ end"
         output_file(name).should match header_html
       end      
     end
+    
+    context 'layout' do
+    
+      before do
+        create_item("#{name}.html"){ lorem }
+      end
+          
+      let :configuration do"
+        LAYOUT = 'default'"
+      end    
+
+      context 'by default' do
+        let(:configuration){''}         
+        it 'should use no layout' do
+          compile!
+          output_file(name).should_not match /doctype/i
+          output_file(name).should_not include '<head>'
+        end
+      end
+    
+      it 'should be configurable' do
+        compile!
+        output_file(name).should match /doctype/i
+        output_file(name).should include '<head>'
+      end
+    end
   end
 end
