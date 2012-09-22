@@ -4,7 +4,29 @@ require_classes
 
 
 describe Page do
-  describe 'really_html?' do
+
+  describe '#last_extension' do
+    variants = %w[
+
+      given_file_name:                     last_extension:
+
+      content/canon/index.html.slim        slim
+      content/canon/style/style.css.sass   sass
+      cont.ent/index.html.slim             slim 
+      layouts/default.slim                 slim  
+
+    ].each_slice(2).drop(1)
+    
+    variants.each do |given, ext|
+      it "should be '#{ext}' when file name is (#{given})" do
+        page = Page.new FakeItem.new given
+        page.last_extension.should == ext
+      end
+    end     
+  end
+  
+  
+  describe '#really_html?' do
   
     variants = %w[
       file:             result:
@@ -31,7 +53,7 @@ describe Page do
     end  
   end
   
-  describe 'really_css?' do
+  describe '#really_css?' do
   
     variants = %w[
       file:             result:

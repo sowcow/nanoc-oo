@@ -16,6 +16,7 @@ module PageDefaults
   end
 
   def filter context
+    context.filter @@filters[last_extension] if @@filters[last_extension]
   end
   def apply_layout context
     context.layout layout if layout
@@ -63,9 +64,14 @@ module PageDefaults
     item[:extension]
   end
   
+  def last_extension
+    extension[/[.](.+?)$/, 1] or extension
+  end
+  
   CSS_EXTENSIONS = 'css|sass|scss'
   HTML_EXTENSIONS = 'html|htm|slim|haml|md'
   PRIORITY = 0
+  @@filters = {'md' => :kramdown, 'slim' => :slim, 'erb' => :erb}
 end
 
 class Page

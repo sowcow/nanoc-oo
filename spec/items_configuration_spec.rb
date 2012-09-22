@@ -95,28 +95,65 @@ end"
   
   context 'copiling' do
     context 'filtering' do
-      
-      let :configuration do'
-        def filter context
-          context.filter :kramdown
-        end'
-      end
-      
+            
       let(:header){ 'Testing header!' }
-      let(:header_md){ "##{header}" }
+      let(:header_md){ "# #{header}" }
       let(:header_html){ %r[<h1.*?>#{header}</h1>] }
       
-      before do
-        create_item "#{name}.html" do
-          "##{header}"
+      context 'when configured' do
+        let :configuration do'
+          def filter context
+            context.filter :kramdown
+          end'
         end
-      end      
+
+        before do
+          create_item "#{name}.html" do
+            header_md
+          end
+        end      
       
-      it 'should be configurable' do
-        compile!
-        output_file(name).should_not include header_md
-        output_file(name).should match header_html
-      end      
+        it 'should work right' do
+          compile!
+          output_file(name).should_not include header_md
+          output_file(name).should match header_html
+        end
+      end
+
+     
+      context 'by default' do
+        let(:configuration){''} 
+       
+        context 'should use last file extension to choose right filter' do
+          context 'for slim' do
+            before do
+              create_item "#{name}.html.slim" do
+                "h1 #{header}"
+              end            
+            end
+            
+            it 'should work' do
+              compile!
+              output_file(name).should match header_html
+            end
+          end
+
+          context 'for markdown' do
+            before do
+              create_item "#{name}.html.md" do
+                header_md
+              end            
+            end
+            
+            it 'should work' do
+              compile!
+              output_file(name).should match header_html
+            end
+          end
+        end
+      end
+
+      
     end
     
     context 'layout' do
