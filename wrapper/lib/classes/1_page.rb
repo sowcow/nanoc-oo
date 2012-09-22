@@ -8,6 +8,13 @@ module PageDefaults
     identifier.chop + (!html?? ".#{ item[:extension] }" : '/index.html')
   end
   
+  def compile context
+    filter context
+  end
+
+  def filter context
+  end
+  
   # uses FakeItem#file or NanocItem#[:binary]
   #
   def binary?

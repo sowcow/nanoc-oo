@@ -92,4 +92,31 @@ end"
       end
     end 
   end
+  
+  context 'copiling' do
+    context 'filtering' do
+      
+      let :configuration do'
+        def filter context
+          context.filter :kramdown
+        end'
+      end
+      
+      let(:header){ 'Testing header!' }
+      let(:header_md){ "##{header}" }
+      let(:header_html){ %r[<h1.*?>#{header}</h1>] }
+      
+      before do
+        create_item "#{name}.html" do
+          "##{header}"
+        end
+      end      
+      
+      it 'should be configurable' do
+        compile!
+        output_file(name).should_not include header_md
+        output_file(name).should match header_html
+      end      
+    end
+  end
 end

@@ -36,10 +36,11 @@ end
 
 content_items.each do |item|
   compile (+item).identifier do
-    unless (+item).binary?
-      filter :erb
-      layout 'default'
-    end  
+    (+item).compile self
+    #unless (+item).binary?
+    #  filter :erb
+    #  layout 'default'
+    #end  
   end
   route (+item).identifier do
     (+item).route
