@@ -35,14 +35,29 @@ end
 
 
 content_items.each do |item|
+  
+  (+item).preprocess
+  
   compile (+item).identifier do
     (+item).compile self
-    #unless (+item).binary?
-    #  filter :erb
-    #  layout 'default'
-    #end  
   end
+  
   route (+item).identifier do
     (+item).route
   end  
+end
+
+class Nanoc::Item
+  def +@
+    self[:object]
+  end   
+end
+
+preprocess do
+  items.each do |item|
+    if klass = classes[item]
+      item[:object] = klass.new(item)
+      (+item).preprocess
+    end  
+  end
 end

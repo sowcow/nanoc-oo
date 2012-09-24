@@ -212,4 +212,42 @@ end"
       end
     end
   end
+  
+  describe '#preprocess' do
+  
+    
+    before do
+      TempFiles.create "#{SITE}/lib/classes/#{name}.rb" do
+        "
+        class TestingPage < Page
+          GOOD_ID = Regexp.new Regexp.escape '/#{name}/'
+          #{configuration}
+        end
+        "
+      end
+    end   
+    before do
+      create_item("#{ name }.html"){ lorem }
+    end    
+    let(:name){ 'testing-items-and-classes' }
+  
+  
+    context 'when defined' do
+      let :configuration do
+        "
+        def preprocess
+          item.identifier = item.identifier.chop + '#{ modified }' + '/'
+        end
+        "
+      end
+      let(:modified){ '-woohoo' }
+      
+      
+      it 'can change items identifier' do
+        compile!
+        File.should_not exist "#{ SITE }/output/#{ name }/index.html"        
+        File.should exist "#{ SITE }/output/#{ name + modified }/index.html"        
+      end
+    end
+  end
 end

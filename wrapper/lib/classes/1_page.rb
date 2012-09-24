@@ -76,12 +76,20 @@ end
 
 class Page
   include PageDefaults
-  attr_reader :identifier
   attr_reader :item
   
   def initialize item
     @item = item
-    @identifier = item.identifier
+  end
+  
+  def preprocess
+  end
+  
+  def identifier
+    item.identifier
+  end
+  def identifier= value
+    item.identifier = value
   end
   
   def self.accept? identifier

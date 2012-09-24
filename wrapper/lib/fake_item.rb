@@ -1,6 +1,6 @@
 class FakeItem
   attr_reader :file
-  attr_reader :identifier
+  attr_accessor :identifier
     
   def initialize file
     @file = file

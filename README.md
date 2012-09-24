@@ -10,7 +10,8 @@ TODO:
  * check coverage
  * use `context` properly (in specs)
  * specs want to be cleaned
+ * refactor specs...
 
-**?:** `#binary?` through ptools or nanoc config
+**?** `#binary?` through ptools or nanoc config
 
 *(to be continued)*
