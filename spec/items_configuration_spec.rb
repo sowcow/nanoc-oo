@@ -17,9 +17,6 @@ shared_examples_for 'produces html' do
 end
 
 
-
-
-
 describe '=>items configuration through classes' do
 
   before do
