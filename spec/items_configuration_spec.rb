@@ -2,65 +2,70 @@ require 'support/all'
 require_lib
 
 
+shared_examples_for 'valid routing' do
+  it 'routes properly' do
+    compile!
+    File.should exist good
+  end  
+end
+
+shared_examples_for 'produces html' do
+  it 'produces html file' do
+    compile!
+    output_file(name).should match compiled_html
+  end  
+end
+
+
+
+
+
 describe '=>items configuration through classes' do
 
   before do
-    TempFiles.create "#{SITE}/lib/classes/#{name}.rb" do
-"
-class TestingPage < Page
-  GOOD_ID = Regexp.new Regexp.escape '/#{name}/'
-#{configuration}
-end"    
+    TempFiles.create "#{ SITE }/lib/classes/#{ name }.rb" do
+      "
+      class TestingPage < Page
+        GOOD_ID = Regexp.new Regexp.escape '/#{ name }/'
+        #{ configuration }
+      end
+      "
     end
-  end 
-
+  end
   let(:name){ 'teting-items-and-classes' }
   
 
-  context 'routes' do
-    let :configuration do
-"
-  def route
-    '/#{route}/index.html'
-  end"      
-    end
-    let(:route){ 'test-route-changed' }
+  describe '#route' do
 
-    describe 'default value' do
+    context 'by default' do
       let(:configuration){''}
 
-      
+
       context 'for .html files' do
         before do
-          create_item("#{name}.html"){ lorem }
+          create_item("#{ name }.html"){ lorem }
         end
         
-        let(:good){ "#{SITE}/output/#{name}/index.html" }
+        let(:good){ "#{ SITE }/output/#{ name }/index.html" }
       
-        it 'should work properly' do
-          compile!
-          File.should exist good
-        end
+        include_examples "valid routing"
       end
       
       context 'for .png files' do
         before do
-          full_name = "#{SITE}/content/#{name}.png"
+          full_name = "#{ SITE }/content/#{ name }.png"
           TempFiles.create full_name, &->{}
           save_png_image full_name
         end
         
-        let(:good){ "#{SITE}/output/#{name}.png" }
+        let(:good){ "#{ SITE }/output/#{ name }.png" }
       
-        it 'should work properly' do
-          compile!
-          File.should exist good
-        end
+        include_examples "valid routing"
       end   
       
       context 'for .css files' do
         before do
-          full_name = "#{SITE}/content/#{name}.css"
+          full_name = "#{ SITE }/content/#{ name }.css"
           TempFiles.create full_name do'
             html {
               color: lime;
@@ -69,37 +74,69 @@ end"
           end
         end
         
-        let(:good){ "#{SITE}/output/#{name}.css" }
+        let(:good){ "#{ SITE }/output/#{ name }.css" }
       
-        it 'should work properly' do
-          compile!
-          File.should exist good
-        end
+        include_examples "valid routing"
       end
-    end    
-    
+    end  
+
     context 'configured through class' do
-      before do
-        create_item("#{name}.html"){ lorem }
+      let :configuration do
+       "
+       def route
+          '/#{ route }/index.html'
+        end
+        "
       end
-      #####let(:route){ 'test-route-changed' }      
+      let(:route){ 'test-route-changed' }
+
+      before do
+        create_item("#{ name }.html"){ lorem }
+      end
   
-      it 'should be work' do
+      it 'routes properly' do
         compile!
     
-        File.should_not exist "#{SITE}/output/#{name}/index.html"
-        File.should exist     "#{SITE}/output/#{route}/index.html"
+        File.should_not exist "#{ SITE }/output/#{ name }/index.html"
+        File.should exist     "#{ SITE }/output/#{ route }/index.html"
       end
     end 
   end
   
-  context 'copiling' do
-    context 'filtering' do
+  describe '#compile' do
+    describe 'filtering' do
             
       let(:header){ 'Testing header!' }
-      let(:header_md){ "# #{header}" }
-      let(:header_html){ %r[<h1.*?>#{header}</h1>] }
-      
+      let(:header_md){ "# #{ header }" }
+      let(:header_slim){ "h1 #{ header }" }
+      let(:compiled_html){ %r[<h1.*?>#{ header }</h1>] }
+           
+      context 'by default' do
+        let(:configuration){''} 
+       
+        context 'should use last file extension to choose right filter' do
+          context 'for slim' do
+            before do
+              create_item "#{ name }.html.slim" do
+                header_slim
+              end            
+            end
+            
+            include_examples 'produces html'
+          end
+
+          context 'for markdown' do
+            before do
+              create_item "#{ name }.html.md" do
+                header_md
+              end            
+            end
+            
+            include_examples 'produces html'
+          end
+        end
+      end
+
       context 'when configured' do
         let :configuration do'
           def filter context
@@ -108,64 +145,21 @@ end"
         end
 
         before do
-          create_item "#{name}.html" do
+          create_item "#{ name }.html" do
             header_md
           end
         end      
       
-        it 'should work right' do
-          compile!
-          output_file(name).should_not include header_md
-          output_file(name).should match header_html
-        end
-      end
-
-     
-      context 'by default' do
-        let(:configuration){''} 
-       
-        context 'should use last file extension to choose right filter' do
-          context 'for slim' do
-            before do
-              create_item "#{name}.html.slim" do
-                "h1 #{header}"
-              end            
-            end
-            
-            it 'should work' do
-              compile!
-              output_file(name).should match header_html
-            end
-          end
-
-          context 'for markdown' do
-            before do
-              create_item "#{name}.html.md" do
-                header_md
-              end            
-            end
-            
-            it 'should work' do
-              compile!
-              output_file(name).should match header_html
-            end
-          end
-        end
-      end
-
-      
+        include_examples 'produces html'
+      end      
     end
     
     context 'layout' do
     
       before do
-        create_item("#{name}.html"){ lorem }
+        create_item("#{ name }.html"){ lorem }
       end
           
-      let :configuration do"
-        LAYOUT = 'default'"
-      end    
-
       context 'by default' do
         let(:configuration){''}         
         it 'should use no layout' do
@@ -174,11 +168,17 @@ end"
           output_file(name).should_not include '<head>'
         end
       end
+
+      context 'when configured' do
+        let :configuration do"
+          LAYOUT = 'default'"
+        end    
     
-      it 'should be configurable' do
-        compile!
-        output_file(name).should match /doctype/i
-        output_file(name).should include '<head>'
+        it 'should be configurable' do
+          compile!
+          output_file(name).should match /doctype/i
+          output_file(name).should include '<head>'
+        end
       end
     end
     
@@ -201,36 +201,25 @@ end"
         end
       end
 
-      let :configuration do'
-        def after_compile *a
-        end'
-      end
+      context 'when configured' do
+        let :configuration do'
+          def after_compile *a
+          end'
+        end
       
-      it 'should be configurable' do
-        compile!
-        output_file(name).should include link % absolute
+        it 'paths are not relativised' do
+          compile!
+          output_file(name).should include link % absolute
+        end
       end
     end
   end
   
   describe '#preprocess' do
   
-    
-    before do
-      TempFiles.create "#{SITE}/lib/classes/#{name}.rb" do
-        "
-        class TestingPage < Page
-          GOOD_ID = Regexp.new Regexp.escape '/#{name}/'
-          #{configuration}
-        end
-        "
-      end
-    end   
     before do
       create_item("#{ name }.html"){ lorem }
-    end    
-    let(:name){ 'testing-items-and-classes' }
-  
+    end      
   
     context 'when defined' do
       let :configuration do
