@@ -221,7 +221,7 @@ describe '=>items configuration through classes' do
     context 'when defined' do
       let :configuration do
         "
-        def preprocess
+        def preprocess *a
           item.identifier = item.identifier.chop + '#{ modified }' + '/'
         end
         "

@@ -82,9 +82,19 @@ class Page
     @item = item
   end
   
-  def preprocess
+  def preprocess context
   end
-  
+
+  def do_preprocess context
+    preprocess context
+  ensure
+    @processed = true
+  end
+
+  def processed?
+    @processed
+  end
+
   def identifier
     item.identifier
   end
@@ -102,4 +112,13 @@ class Page
   def rep
     :default
   end
+end
+
+class UndefinedPage < Page
+  PRIORITY = fixnum_min = -(2**(0.size * 8 -2))
+  def self.accept? *a; true end
+
+  def route *a; end
+  def compile *a; end
+  def preprocess *a; end
 end

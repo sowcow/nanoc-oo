@@ -1,6 +1,33 @@
 #!/usr/bin/env ruby
 
 
+###############
+#     Odd     #
+###############
+
+class Nanoc::Item
+  def +@
+    self[:object]
+  end   
+end
+
+# compile default files created by nanoc:
+compile('/'){ layout 'default' };  route('/'){'/index.html'}
+compile('/stylesheet/'){};         route('/stylesheet/'){'/style.css'}
+
+@file = '../log.txt'
+def log?
+  File.exist?(@file) ? File.read(@file) : ''
+end
+def log data
+  File.write @file, log? + "\n#{ data }"
+end
+
+
+#################
+#    Layouts    #
+#################
+
 # The first matching rule is used:
 
 # layout '*', :erb
@@ -16,28 +43,32 @@ FakeItems.new('layouts').items.each do |item|
 end
 
 
-# compile default files created by nanoc:
+#################
+#     Items     #
+#################
 
-compile('/'){ layout 'default' }
-route('/'){'/index.html'}
+module Preprocessor  # one .preprocess per item!
 
-compile('/stylesheet/'){}
-route('/stylesheet/'){'/style.css'}
+  def preprocess! context, classes
 
-
-content_items = FakeItems.new('content').items
-classes = ItemClass.new
-
-content_items.select! do |item|
-  klass = classes[item]
-  item[:object] = klass.new(item) if klass
+    while item = context.items.find { |item| !(+item) || !(+item).processed? }
+      item[:object] = classes[item].new(item) unless +item
+      (+item).do_preprocess context
+    end
+  end
 end
 
+fake = FakeItems.new('content')
+classes = ItemClass.new
+extend Preprocessor; preprocess! fake, classes
 
-content_items.each do |item|
-  
-  (+item).preprocess
-  
+
+###################
+#  Compile/Route  #
+###################
+
+fake.items.each do |item|
+    
   compile (+item).identifier do
     (+item).compile self
   end
@@ -47,17 +78,13 @@ content_items.each do |item|
   end  
 end
 
-class Nanoc::Item
-  def +@
-    self[:object]
-  end   
+
+##################
+#   Preprocess   #
+##################
+
+@preprocess = -> context do
+  extend Preprocessor; preprocess! context, classes
 end
 
-preprocess do
-  items.each do |item|
-    if klass = classes[item]
-      item[:object] = klass.new(item)
-      (+item).preprocess
-    end  
-  end
-end
+preprocess &@preprocess
