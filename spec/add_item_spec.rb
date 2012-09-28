@@ -20,7 +20,7 @@ describe 'Page#preprocess' do
 
         class NewItems < Page
           GOOD_ID = %r|item_|
-        end        
+        end  
         "
       end
     end      
@@ -59,5 +59,38 @@ describe 'Page#preprocess' do
         Dir["#{ SITE }/output/**/*.html"].count.should == 3 + 1 + 1  # /index.html + "/#{ name }.html"
       end
     end
+    
+    describe 'reject!' do
+
+      context 'configuration 1' do
+        let(:configuration) do
+          '
+          def preprocess context
+            context.items.reject! { true }
+          end
+          '
+        end
+      
+        it 'removes items' do
+          compile!
+          Dir["#{ SITE }/output/**/*.html"].count.should == 0
+        end      
+      end
+      
+      context 'configuration 2' do
+        let(:configuration) do
+          '
+          def preprocess context
+            context.items.reject! { |those| those.identifier != identifier }
+          end
+          '
+        end
+      
+        it 'removes items' do
+          compile!
+          Dir["#{ SITE }/output/**/*.html"].count.should == 1
+        end      
+      end      
+    end    
   end
 end

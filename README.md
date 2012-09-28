@@ -10,7 +10,6 @@ TODO:
  * specs for UndefinedPage?
  * get rid of trash in Rules
  * cucumber features
- * delete items at preprocess?
  * items children, parent
  * check coverage
  * refactor:
