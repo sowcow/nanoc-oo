@@ -1,6 +1,4 @@
-# nanoc-OO
-
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/sowcow/nanoc-oo)
+# nanoc-OO [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/sowcow/nanoc-oo)
 
 the main idea is to decouple Rules file to classes
 
