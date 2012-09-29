@@ -14,6 +14,7 @@ TODO:
  * cucumber features
  * items children, parent
  * check coverage
+ * `#binary?` -> FakeItem (through ptools)
  * refactor:
    * specs:
      * refactor temp spec helpers
@@ -25,8 +26,6 @@ TODO:
      * extract `"#{ SITE }/output/#{ name }..."`
      * tightly coupled specs?
  
-**?** `#binary?` through ptools or nanoc config
-
 **?** `'some.erb'.html?`
 
 *(to be continued)*
