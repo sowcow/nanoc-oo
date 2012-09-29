@@ -24,6 +24,7 @@ TODO:
      * tightly coupled specs?
  
 **?** `#binary?` through ptools or nanoc config
+
 **?** `'some.erb'.html?`
 
 *(to be continued)*
