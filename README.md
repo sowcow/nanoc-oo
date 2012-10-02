@@ -9,7 +9,7 @@ also by default files extensions *are* used to apply filters to layouts and item
 ...
 
 
-**todo:**
+## todo:
 
 1. children/parent
 2. Rules file:
@@ -19,7 +19,7 @@ also by default files extensions *are* used to apply filters to layouts and item
 4. decouple specs
 5. ...
 
-**notes:**
+## notes:
  
  * specs for UndefinedPage?
  * `#binary?` -> FakeItem (through ptools)
