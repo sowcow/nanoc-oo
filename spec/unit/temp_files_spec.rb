@@ -66,7 +66,7 @@ describe TempFiles do
       File.read(name).should == text
     end
 
-    it 'creates deeply seated files',f do
+    it 'creates deeply seated files' do
       TempFiles.create nested, &->{ lorem }
       File.should exist nested
     end
