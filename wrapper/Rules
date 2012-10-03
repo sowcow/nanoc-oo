@@ -49,7 +49,7 @@ end
 
 module Preprocessor  # one .preprocess per item!
 
-  def preprocess! context, classes
+  def self.preprocess! context, classes
 
     while item = context.items.find { |item| !(+item) || !(+item).processed? }
       item[:object] = classes[item].new(item) unless +item
@@ -60,7 +60,17 @@ end
 
 fake = FakeItems.new('content')
 classes = ItemClass.new
-extend Preprocessor; preprocess! fake, classes
+
+
+##################
+#   Preprocess   #
+##################
+
+Preprocessor.preprocess! fake, classes
+
+preprocess do
+  Preprocessor.preprocess! self, classes
+end
 
 
 ###################
@@ -77,14 +87,3 @@ fake.items.each do |item|
     (+item).route
   end  
 end
-
-
-##################
-#   Preprocess   #
-##################
-
-@preprocess = -> context do
-  extend Preprocessor; preprocess! context, classes
-end
-
-preprocess &@preprocess
