@@ -1,13 +1,10 @@
 # nanoc-OO [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/sowcow/nanoc-oo)
 
-the main idea is to decouple Rules file to classes:
-*(examples or features gonna be here)*
+* the main idea is to decouple Rules file to classes \<link to feature>
 
-also by default files extensions *are* used to apply filters to layouts and items:
-*(examples or features gonna be here)*
+* by default files extensions are used to apply filters to layouts and items \<link to feature>
 
-...
-
+* **pending** (+item).children is filled with children by default; some dsl to assign other children to items; compiling is guided by children tree
 
 ## todo:
 
