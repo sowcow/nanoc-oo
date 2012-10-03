@@ -30,3 +30,5 @@
      * fix specs: `it 'should work'`, `it 'routes properly'`, ...
      * extract `"#{ SITE }/output/#{ name }..."`
  * `'some.erb'.html?` 
+ * silent `no compilation rules found` by introducing empty compilation rule in `UndefinedPage`?
+ * use factories?  
