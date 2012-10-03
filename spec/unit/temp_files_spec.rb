@@ -52,12 +52,23 @@ describe TempFiles do
     let(:name){ 'temp-file-testing-TempFiles.txt' }
     let(:text){ 'text for file' }
 
+    let(:test_dir){ 'test-temp-dir' }
+    let(:nested){ "#{test_dir}/nested/file.txt" }
+    after :each do
+      rm_rf test_dir
+    end
+
     it 'should create file' do
       TempFiles.create name do
         text
       end
       File.should exist name
       File.read(name).should == text
+    end
+
+    it 'creates deeply seated files',f do
+      TempFiles.create nested, &->{ lorem }
+      File.should exist nested
     end
   end
   

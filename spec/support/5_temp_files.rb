@@ -5,6 +5,11 @@ RSpec.configure do |config|
   end
 end
 
+def prepare_directory_for file
+  require 'fileutils'
+  FileUtils.mkpath File.split(file)[0]
+end
+
 class TempFiles
   @files = []
   @prepends = []
@@ -13,6 +18,7 @@ class TempFiles
 class << self
   def create file
     @files << file
+    prepare_directory_for file
     File.write(file, yield)
   end
   
