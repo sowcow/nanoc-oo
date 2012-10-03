@@ -11,9 +11,8 @@ class Nanoc::Item
   end   
 end
 
-# compile default files created by nanoc:
-compile('/'){ layout 'default' };  route('/'){'/index.html'}
-compile('/stylesheet/'){};         route('/stylesheet/'){'/style.css'}
+#compile('/'){ layout 'default' };  route('/'){'/index.html'}
+#compile('/stylesheet/'){};         route('/stylesheet/'){'/style.css'}
 
 @file = '../log.txt'
 def log?
@@ -47,6 +46,7 @@ end
 def root items
   items.find { |item| item.identifier == '/' }
 end
+
 
 #################
 #    Layouts    #

@@ -12,6 +12,8 @@ end
 def start
   clean
   `nanoc create-site #{SITE}`
+  File.delete "#{SITE}/content/index.html"
+  File.delete "#{SITE}/content/stylesheet.css"
 end
 
 RSpec.configure do |config|
