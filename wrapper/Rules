@@ -34,6 +34,19 @@ module Preprocessor  # one .preprocess per item!
   end
 end
 
+def build! item
+  compile (+item).identifier do
+    (+item).compile self
+  end
+
+  route (+item).identifier do
+    (+item).route
+  end    
+end
+
+def root items
+  items.find { |item| item.identifier == '/' }
+end
 
 #################
 #    Layouts    #
@@ -76,13 +89,8 @@ end
 #  Compile/Route  #
 ###################
 
+#build! root(fake.items)
+
 fake.items.each do |item|
-    
-  compile (+item).identifier do
-    (+item).compile self
-  end
-  
-  route (+item).identifier do
-    (+item).route
-  end  
+  build! item
 end
