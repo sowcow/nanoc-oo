@@ -40,7 +40,7 @@ describe 'Page#preprocess' do
 
       it 'reflects items' do
         compile!
-        output_file(name)[/<strong>(.+)<\/strong>/, 1].should == '3'   # with 2 nanoc generated items...
+        output_file(name)[/<strong>(.+)<\/strong>/, 1].should == '1'
       end
     end
 
@@ -57,7 +57,7 @@ describe 'Page#preprocess' do
 
       it 'adds item' do
         compile!
-        Dir["#{ SITE }/output/**/*.html"].count.should == 3 + 1 + 1  # /index.html + "/#{ name }.html"
+        Dir["#{ SITE }/output/**/*.html"].count.should == 3 + 1  # "/#{ name }.html"
       end
     end
     
