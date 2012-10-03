@@ -23,30 +23,6 @@ def log data
   File.write @file, log? + "\n#{ data }"
 end
 
-
-#################
-#    Layouts    #
-#################
-
-# The first matching rule is used:
-
-# layout '*', :erb
-# layout '/default/', :slim
-# layout '/default/', :haml, format: :html5
-# layout %r{^/_.+/$}, :erb
-# /default/ may be layouts/default.with-any-extension
-
-# all unmatched layouts will be compiled using filter determined by extension:
-
-FakeItems.new('layouts').items.each do |item|
-  layout item.identifier, FilterFor[item.file]
-end
-
-
-#################
-#     Items     #
-#################
-
 module Preprocessor  # one .preprocess per item!
 
   def self.preprocess! context, classes
@@ -57,6 +33,29 @@ module Preprocessor  # one .preprocess per item!
     end
   end
 end
+
+
+#################
+#    Layouts    #
+#################
+#
+# The first matching rule is used:
+# layout '*', :erb
+# layout '/default/', :slim
+# layout '/default/', :haml, format: :html5
+# layout %r{^/_.+/$}, :erb
+# /default/ may be layouts/default.with-any-extension
+# all unmatched layouts will be compiled using filter determined by extension:
+#
+
+FakeItems.new('layouts').items.each do |item|
+  layout item.identifier, FilterFor[item.file]
+end
+
+
+#################
+#     Items     #
+#################
 
 fake = FakeItems.new('content')
 classes = ItemClass.new
