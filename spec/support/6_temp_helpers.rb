@@ -58,8 +58,12 @@ def prepend_rules
   end
 end
 
+def output name
+  "#{SITE}/output/#{name}/index.html"
+end
+
 def output_file name
-  File.read "#{SITE}/output/#{name}/index.html"
+  File.read output name
 end
 
 def compile!
