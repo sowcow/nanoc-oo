@@ -89,8 +89,4 @@ end
 #  Compile/Route  #
 ###################
 
-#build! root(fake.items)
-
-fake.items.each do |item|
-  build! item
-end
+build! root(fake.items) if fake.items.count > 0  # FIXME "if" just for specs, crashes otherwise...
