@@ -46,7 +46,6 @@ describe 'items compiling guided by children' do
     end
 
     it 'works' do
-      pending
       compile!
       File.should exist output name
     end
