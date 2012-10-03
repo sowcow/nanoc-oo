@@ -11,6 +11,14 @@ def create_item name, ext=nil
   end
 end
 
+def create_class
+  text = yield
+  name = text[/class(.+?)</, 1].strip.downcase
+  TempFiles.create "#{SITE}/lib/classes/#{name}.rb" do
+    text
+  end
+end
+
 def slim_layout
 "doctype 5
 html lang=@item[:lang]
