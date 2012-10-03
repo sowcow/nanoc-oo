@@ -7,12 +7,21 @@ module PageDefaults
   def route
     identifier.chop + (!html?? ".#{ item[:extension] }" : '/index.html')
   end
+
+
+  def children context
+    direct_children context
+  end
   
+  def direct_children context
+    context.items.select { |items| items.identifier =~ %r|^#{ Regexp.escape identifier }[^/]+/$| }
+  end
   
   def compile context
     filter context
     apply_layout context
     after_compile context
+    compile_children context
   end
 
   def filter context
@@ -26,6 +35,12 @@ module PageDefaults
   end
   def after_compile context
     context.filter :relativize_paths, type: kind if kind  
+  end
+  def compile_children context
+    children(context).each do |child|
+      stop!
+      build! child
+    end
   end
 
   def kind

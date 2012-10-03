@@ -5,6 +5,20 @@ require_classes
 
 describe Page do
 
+  describe '#direct_children' do
+    let :context do
+      items = %w[ index  some  other  one-more  deep/item  deep/item2  deep/item/level3  ].map do |file|
+        FakeItem.new "/content/#{file}.html"
+      end
+      double items: items
+    end
+    let(:root){ Page.new FakeItem.new '/index' }
+
+    it 'works' do
+      root.direct_children(context).map(&:identifier).should =~ %w[ /some/  /other/  /one-more/ ]
+    end
+  end
+
   describe '#last_extension' do
     variants = %w[
 
