@@ -3,11 +3,33 @@ def is_binary_file? file
   File.binary? file
 end
 
+module Hidable
+  def route *a
+    return nil if hidden?
+    super
+  end
+
+  # def compile *a
+  #   return nil if hidden?
+  #   super
+  # end
+
+  private
+  def hidden?
+  #  item[:hidden] == true
+  end
+end
+
 module PageDefaults
   def route
     identifier.chop + (!html?? ".#{ item[:extension] }" : '/index.html')
   end
 
+  def compile_children context, items_context
+    children(items_context).each do |child|
+      ::Builder.build! child, context, items_context
+    end
+  end  
 
   def children context
     direct_children context
@@ -21,7 +43,6 @@ module PageDefaults
     filter context
     apply_layout context
     after_compile context
-    compile_children context
   end
 
   def filter context
@@ -35,12 +56,6 @@ module PageDefaults
   end
   def after_compile context
     context.filter :relativize_paths, type: kind if kind  
-  end
-  def compile_children context
-    children(context).each do |child|
-      stop!
-      build! child
-    end
   end
 
   def kind
@@ -91,6 +106,7 @@ end
 
 class Page
   include PageDefaults
+  include Hidable
   attr_reader :item
   
   def initialize item

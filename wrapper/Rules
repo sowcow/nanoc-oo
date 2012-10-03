@@ -27,24 +27,34 @@ module Preprocessor  # one .preprocess per item!
   def self.preprocess! context, classes
 
     while item = context.items.find { |item| !(+item) || !(+item).processed? }
-      item[:object] = classes[item].new(item) unless +item
+      prepare item, classes
       (+item).do_preprocess context
     end
   end
-end
 
-def build! item
-  compile (+item).identifier do
-    (+item).compile self
+  def self.prepare item, classes
+    item[:object] = classes[item].new(item) unless +item
+    item
   end
-
-  route (+item).identifier do
-    (+item).route
-  end    
 end
 
-def root items
-  items.find { |item| item.identifier == '/' }
+module ::Builder
+
+  def self.build! item, context, items_context
+    context.compile (+item).identifier do
+      (+item).compile self
+    end
+
+    context.route (+item).identifier do
+      (+item).route    
+    end
+
+    (+item).compile_children context, items_context
+  end
+end
+
+def root items, classes
+  items.find { |item| item.identifier == '/' } or Preprocessor.prepare Nanoc::Item.new('', { hidden: true }, '/'), classes
 end
 
 
@@ -88,5 +98,7 @@ end
 ###################
 #  Compile/Route  #
 ###################
-
-build! root(fake.items) if fake.items.count > 0  # FIXME "if" just for specs, crashes otherwise...
+#
+# FIXME "if" just for specs, to prevent crashes
+#
+Builder.build! root(fake.items, classes), self, fake if fake.items.count > 0

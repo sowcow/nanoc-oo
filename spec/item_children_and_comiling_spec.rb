@@ -23,4 +23,32 @@ describe 'items compiling guided by children' do
       File.should exist "#{SITE}/output/index.html"
     end
   end
+
+  context 'just non-root item' do
+    let(:name){ 'non-root-item' }
+    before do
+      create_item("#{name}.html"){ lorem }
+    end
+
+    it 'works' do
+      compile!
+      File.should exist output name
+    end
+  end
+
+  context 'one deep seated item' do
+
+    before(:each){ pending }
+
+    let(:name){ 'deep/seated/item' }
+    before do
+      create_item("#{name}.html"){ lorem }
+    end
+
+    it 'works' do
+      pending
+      compile!
+      File.should exist output name
+    end
+  end
 end
