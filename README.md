@@ -4,7 +4,7 @@
 
 * by default files extensions are used to apply filters to layouts and items \<link to feature>
 
-* **pending** (+item).children is filled with children by default; some dsl to assign other children to items; compiling is guided by children tree
+* **pending** (+item).children is filled with children by default; some dsl to reuse items by assigning them as children to other items; compiling is guided by children tree
 
 ## todo:
 
@@ -33,3 +33,4 @@
  * silent `no compilation rules found` by introducing empty compilation rule in `UndefinedPage`?
  * use factories?  
  * require inside code
+ * Rules file functions are passing params too much
