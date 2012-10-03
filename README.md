@@ -32,3 +32,4 @@
  * `'some.erb'.html?` 
  * silent `no compilation rules found` by introducing empty compilation rule in `UndefinedPage`?
  * use factories?  
+ * require inside code
