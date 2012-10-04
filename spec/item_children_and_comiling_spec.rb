@@ -38,8 +38,6 @@ describe 'items compiling guided by children' do
 
   context 'one deep seated item' do
 
-    #before { pending }
-
     let(:name){ 'deep/seated/item' }
     before do
       create_item("#{name}.html"){ lorem }
