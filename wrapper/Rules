@@ -41,12 +41,16 @@ end
 module ::Builder
 
   def self.build! item, context, items_context
-    context.compile (+item).identifier do
-      (+item).compile self
-    end
+    
+    unless item.is_a? FakeDir
 
-    context.route (+item).identifier do
-      (+item).route    
+      context.compile (+item).identifier do
+        (+item).compile self
+      end
+
+      context.route (+item).identifier do
+        (+item).route    
+      end
     end
 
     (+item).compile_children context, items_context
