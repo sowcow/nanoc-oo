@@ -1,5 +1,7 @@
 # nanoc-OO [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/sowcow/nanoc-oo)
 
+* even more powerful nanoc (\*with object oriented taste\*)
+
 * the main idea is to decouple Rules file to classes \<link to feature>
 
 * by default files extensions are used to apply filters to layouts and items \<link to feature>
@@ -35,3 +37,4 @@
  * require inside code
  * Rules file functions are passing params too much
  * Rules:`unless item.is_a? FakeDir` is not tested decision
+ * unclear testing dependencies
