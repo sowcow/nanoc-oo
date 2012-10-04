@@ -16,15 +16,23 @@ describe FakeItems do
       Dir.mkdir "#{dir}/some-dir"
       Dir.mkdir "#{dir}/some.odd.dir1"
       Dir.mkdir "#{dir}/some.odd.dir2"
+
+      5.times do |i|
+        Dir.mkdir "#{dir}/some_dir#{i}"
+        File.write("#{dir}/some_dir#{i}/index.html.slim", 'data')
+      end
     end
 
     after :all do
       rm_rf dir
     end
 
-    it 'should reflect all files(and not directories) in the given directory' do
+    it 'should reflect all files/directories in the given directory (without identical ids)' do
       FakeItems.new(dir).items.first.should be_a FakeItem
-      FakeItems.new(dir).items.count.should == 5
+      files = FakeItems.new(dir).items.select { |those| those.is_a? FakeItem } 
+      dirs  = FakeItems.new(dir).items.select { |those| those.is_a? FakeDir  } 
+      files.count.should == 5 + 5
+      dirs.count.should == 4 + 0
     end
   end  
 end
