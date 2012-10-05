@@ -1,11 +1,17 @@
-Given 'I have a blank nanoc site' do
+Given 'I have a default nanoc site' do
   step '~nanoc create-site site'
   step 'I cd to "site"'
 end
 
-Given 'I have a wrapped nanoc site' do
-  step 'I have a blank nanoc site'
+Given 'I have a wrapped default nanoc site' do
+  step 'I have a default nanoc site'
   step 'I copy the nanoc-oo wrapper here'
+end
+
+Given 'I have a blank wrapped nanoc site' do
+  step 'I have a wrapped default nanoc site'
+  step 'I remove the file "content/index.html"'
+  step 'I remove the file "content/stylesheet.css"'
 end
 
 When 'I copy the nanoc-oo wrapper here' do
