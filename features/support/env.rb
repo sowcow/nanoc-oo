@@ -1,7 +1,21 @@
 require 'aruba/cucumber'
+include FileUtils
 
+
+def clean_temp
+  rm_rf 'tmp'
+end
+AfterConfiguration do |config|
+  clean_temp
+end
 at_exit do
-  FileUtils.rm_rf 'tmp'
+  clean_temp
+end
+
+
+def copy_all params
+  from, to = params[:from], params[:to]
+  cp_r from, to
 end
 
 

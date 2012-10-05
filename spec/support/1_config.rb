@@ -1,12 +1,16 @@
 SITE = 'tmp'
 WRAP = 'wrapper'
 
+def require_here dir
+  Dir["#{dir}/*.rb"].each {|file| require File.expand_path file }
+end
+
 def require_lib
-  require File.expand_path "#{WRAP}/lib/all.rb"
+  require_here "#{WRAP}/lib"
 end
 
 def require_classes
-  Dir["#{WRAP}/lib/classes/*.rb"].each {|file| require File.expand_path file }
+  require_here "#{WRAP}/lib/classes"
 end
 
 

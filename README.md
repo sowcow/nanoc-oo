@@ -38,3 +38,4 @@
  * Rules file functions are passing params too much
  * Rules:`unless item.is_a? FakeDir` is not tested decision
  * unclear testing dependencies
+ * require FileUtils?

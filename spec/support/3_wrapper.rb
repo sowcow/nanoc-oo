@@ -1,7 +1,6 @@
 def wrap
   require 'FileUtils'
   FileUtils.cp_r "#{WRAP}/.", SITE
-  File.delete "#{SITE}/lib/all.rb"
 end
 
 def add_filters filters, config = "#{SITE}/config.yaml"
