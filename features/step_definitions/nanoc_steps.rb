@@ -1,5 +1,5 @@
 When /^~nanoc (.*)$/ do |command|
-  step "I run `ruby -S nanoc #{command}`"
+  step "I successfully run `ruby -S nanoc #{command}`"
 end
 
 Given 'I have a default nanoc site' do
