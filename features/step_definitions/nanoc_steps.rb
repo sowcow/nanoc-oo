@@ -1,14 +1,14 @@
-Step '~nanoc *' do |command|
+Step '>nanoc *' do |command|
   step "I successfully run `ruby -S nanoc #{command}`"
 end
 
 Given 'I have a default nanoc site' do
-  step '~nanoc create-site site'
+  step '>nanoc create-site site'
   step 'I cd to "site"'
 end
 
 When 'I successfully compile it' do
-  step '~nanoc compile'
+  step '>nanoc compile'
   step 'it is successfully compiled'
 end
 
