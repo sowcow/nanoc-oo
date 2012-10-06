@@ -39,3 +39,9 @@
  * Rules:`unless item.is_a? FakeDir` is not tested decision
  * unclear testing dependencies
  * require FileUtils?
+ * fakeitem ~ nanocitem
+ * specs
+   * binary?
+   * extension or ''
+   * raw_content
+   * EXT = 

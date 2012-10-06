@@ -91,13 +91,14 @@ module PageDefaults
   end  
   
   def extension
-    item[:extension]
+    item[:extension] or self.class::EXT
   end
   
   def last_extension
     extension[/[.](.+?)$/, 1] or extension
   end
   
+  EXT = ''
   CSS_EXTENSIONS = 'css|sass|scss'
   HTML_EXTENSIONS = 'html|htm|slim|haml|md'
   PRIORITY = 0

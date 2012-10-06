@@ -7,6 +7,15 @@ class FakeItem
     @identifier = get_identifier
     @values = {}
   end
+
+  def binary?
+    require 'ptools'
+    File.binary?(file)
+  end
+
+  def raw_content
+    File.read file
+  end
   
   def +@
     @values[:object]
