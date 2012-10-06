@@ -40,8 +40,9 @@
  * unclear testing dependencies
  * require FileUtils?
  * fakeitem ~ nanocitem
- * specs
+ * specs (lack of specification of code that is covered by features)
    * binary?
    * extension or ''
    * raw_content
-   * EXT = 
+   * EXT = , ID=nil, Page.create
+   

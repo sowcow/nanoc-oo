@@ -113,6 +113,11 @@ class Page
   def initialize item
     @item = item
   end
+
+  def self.create context, *params
+    context.items << item = Nanoc::Item.new(*params)
+    item[:object] = self.new item
+  end
   
   def preprocess context
   end
@@ -135,7 +140,8 @@ class Page
   end
   
   def self.accept? identifier
-    identifier =~ self::GOOD_ID ? true : false  
+    return false unless mask = self::GOOD_ID
+    identifier =~ mask ? true : false  
   end
   
   def representation

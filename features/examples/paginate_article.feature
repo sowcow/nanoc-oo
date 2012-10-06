@@ -21,26 +21,23 @@ Feature: paginate article example
     And a file named "lib/classes/articles.rb" with:
       """
       class Article < Page
-        GOOD_ID = %r|^/[^/]+/$| # one level deep
+        GOOD_ID = //  # any item found
         
         def preprocess context
           pages(item.raw_content).each_with_index do |page,index|
-            context.items << Nanoc::Item.new(page, {}, %"#{identifier}#{index+1}/")
+            ArticlePage.create context, page, {}, %"#{identifier}#{index+1}/"
           end
         end
 
         private
-        def pages content
-          content.scan(/# .+?(?:(?=# )|\z)/m).map &:strip
+        def pages content, one_page=/# .+?(?:(?=# )|\z)/m
+          content.scan(one_page).map &:strip
         end
       end
 
       class ArticlePage < Page
-        GOOD_ID = //
-        PRIORITY = -1  # any non Article
+        GOOD_ID = nil  # only manual assignment by Page.create
         EXT = 'html'
-
-        def preprocess *a; nil end
       end
       """
     When I successfully compile it
