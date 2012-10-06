@@ -1,4 +1,4 @@
-Step '>nanoc *' do |command|
+Step '[>$] ?nanoc *' do |command|
   step "I successfully run `ruby -S nanoc #{command}`"
 end
 
