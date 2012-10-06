@@ -22,7 +22,10 @@ Feature: paginate article example
       """
       class Article < Page
         GOOD_ID = //  # any item found
+
+        LAYOUT = '/article_contents/'  # replace original content using layout
         
+        # create sub pages
         def preprocess context
           pages(item.raw_content).each_with_index do |page,index|
             ArticlePage.create context, page, {}, %"#{identifier}#{index+1}/"
@@ -37,8 +40,14 @@ Feature: paginate article example
 
       class ArticlePage < Page
         GOOD_ID = nil  # only manual assignment by Page.create
-        EXT = 'html'
+        EXT = 'html'   # for proper routing to index.html
       end
+      """
+    And a file named "layouts/article_contents.slim" with:
+      """
+      - @title = /# (.*)$/
+      - for page in (+item).children
+        a href=page.path = page.raw_content[@title,1]
       """
     When I successfully compile it
     Then the following files should exist:
@@ -48,9 +57,7 @@ Feature: paginate article example
       | output/article/3/index.html |
     And the file "output/article/index.html" should contain exactly:
       """
-      # First Header
-
-      ...
+      <a href="1/">First Header</a><a href="2/">Second Header</a><a href="3/">Third Header</a>
       """
     And the file "output/article/1/index.html" should contain exactly:
       """
@@ -70,4 +77,3 @@ Feature: paginate article example
 
       ...
       """
-

@@ -29,11 +29,19 @@ module PageDefaults
     children(items_context).each do |child|
       ::Builder.build! child, context, items_context
     end
-  end  
+  end
 
-  def children context
+  def children context=nil
+    return @fixed_children if @fixed_children
+    raise 'context is needed to get children before preprocessing is finished!' unless context
     direct_children context
   end
+
+
+  def fix_children context
+    @fixed_children = children context
+  end
+
   
   def direct_children context
     context.items.select { |items| items.identifier =~ %r|^#{ Regexp.escape identifier }[^/]+/$| }
@@ -109,7 +117,7 @@ class Page
   include PageDefaults
   include Hidable
   attr_reader :item
-  
+
   def initialize item
     @item = item
   end

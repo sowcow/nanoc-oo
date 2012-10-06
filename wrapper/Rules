@@ -30,12 +30,19 @@ module Preprocessor  # one .preprocess per item!
       prepare item, classes
       (+item).do_preprocess context
     end
+
+    fix_children context
   end
 
   def self.prepare item, classes
     item[:object] = classes[item].new(item) unless +item
     item
   end
+  def self.fix_children context
+    context.items.each do |item|
+      (+item).fix_children context
+    end
+  end  
 end
 
 module ::Builder

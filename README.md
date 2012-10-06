@@ -11,17 +11,25 @@
 ## todo:
 
 1. children/parent
-2. Rules file:
+1. Rules file:
     * get rid of trash
-    * is it running twice?
-3. cucumber features / use cases
-4. decouple specs
-5. ...
+    * is it running twice (rspec)?
+1. cucumber features / use cases
+1. layout in a class << !
+1. decouple specs
+1. ...
 
 ## notes:
  
+### useful:
+
+ * relative paths filter used by default
+ * configureable
+
+### cryptic:
+
  * specs for UndefinedPage?
- * `#binary?` -> FakeItem (through ptools)
+ * unused Hidable
  * refactor:
    * specs:
      * refactor temp spec helpers
@@ -44,5 +52,5 @@
    * binary?
    * extension or ''
    * raw_content
-   * EXT = , ID=nil, Page.create
-   
+   * EXT = , ID=nil, Page.create, ...
+ * (+item).parent?
