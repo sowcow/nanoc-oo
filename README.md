@@ -14,7 +14,8 @@
 1. Rules file:
     * get rid of trash
     * is it running twice (rspec)?
-1. cucumber features / use cases
+1. cucumber features / examples
+1. extract methods from step definitions?
 1. layout in a class << !
 1. decouple specs
 1. ...
