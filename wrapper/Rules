@@ -31,7 +31,7 @@ module Preprocessor  # one .preprocess per item!
       (+item).do_preprocess context
     end
 
-    fix_children context
+    fix_children context # after preprocessing finished
   end
 
   def self.prepare item, classes
