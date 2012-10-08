@@ -3,7 +3,9 @@ def full_line line
 end
 
 def regex str
-  full_line str.gsub(/\*/, '(.*?)')   #(/(?<!\\)\*/, '(.*?)')
+  str.gsub!(/\*/, '(.*?)')
+  str.sub!(/\.\.\.$/, '.*')
+  full_line str
 end
 
 def Step step, &block
