@@ -136,7 +136,7 @@ describe '=>items configuration through classes' do
 
       context 'when configured' do
         let :configuration do'
-          def filter context
+          def apply_filter context
             context.filter :kramdown
           end'
         end

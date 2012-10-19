@@ -3,14 +3,15 @@ def make_table array
 end
 
 Step 'the folowing are * files:...' do |group, files|
-  (@groups ||= {})[group] = files.lines.map &:strip
+  (@groups ||= {})[group] = files.lines.map(&:strip).reject &:empty?
 end
 
 Step 'the * files should *exist' do |group, nt| # nt~not
   step "the following files should #{nt}exist:", make_table(@groups[group])
 end
 
-Step 'the * files are the only ones in the "*" directory' do |group, dir|
+Step '(the )?*( files)? are the only (ones|files) in( the)? "*" directory' do |group, dir|
+  really = nil
   in_current_dir do
     really = Dir[File.join(dir,'**/**')].to_a
   end 

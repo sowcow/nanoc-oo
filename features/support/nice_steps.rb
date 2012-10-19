@@ -3,6 +3,7 @@ def full_line line
 end
 
 def regex str
+  str.gsub!(/\(/, '(?:')
   str.gsub!(/\*/, '(.*?)')
   str.sub!(/\.\.\.$/, '.*')
   full_line str

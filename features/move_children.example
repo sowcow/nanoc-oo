@@ -1,0 +1,43 @@
+@wip
+Feature: move children items
+
+  Background:
+    Given I have a blank wrapped nanoc site
+    And the folowing are input files:
+      """
+      content/one/index.html
+      content/one/item1.html
+      content/one/item2.html
+      content/two/index.html
+      """
+    And the folowing are expected output files:
+      """
+      output/one/index.html
+      output/two/index.html
+      output/two/item1/index.html
+      output/two/item2/index.html
+      """
+
+  Scenario:
+    Given the following empty files exist:
+      | content/one/index.html |
+      | content/one/item1.html |
+      | content/one/item2.html |
+      | content/two/index.html |
+    And a file named "lib/classes/classes.rb" with:
+      """
+        class One < Page
+          GOOD_ID = 'one'
+        end
+
+        class Two < Page
+          GOOD_ID = 'two'
+        end
+
+        class ThatItem < Page
+          GOOD_ID = 'one/*'
+        end
+      """
+    When I successfully compile it
+    Then input are the only files in "content" directory
+      And expected output are the only files in "output" directory

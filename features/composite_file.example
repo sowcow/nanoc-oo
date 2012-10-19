@@ -1,0 +1,79 @@
+Feature: composite file example
+
+  Background:
+    Given I have a blank wrapped nanoc site
+    And the folowing are input files:
+      """
+      content/style/one.sass
+      content/style/two.sass
+      content/style/three.sass
+      content/style/index.erb
+      """
+    And the folowing are expected output files:
+      """
+      output/style.css
+      """
+
+  Scenario:
+    Given a file named "lib/classes/style.rb" with:
+      """
+          # different items with same routes???
+          # INDEX = ...
+          # create item?          
+          # compile_ext / route_ext ???
+          # EXT = 'css' filter an route
+          # NAME = 'style.css' # used by routing and ext ??
+          # INDEX = ...
+          # LAYOUT = ...
+          #%r|^/style/.|   # '/style/.'       
+          # '*/style' < 1 level deep
+          # '**/style' < n levels deep
+
+           #%r|^/style/.|   # <<<<<<<<<<< get rid of regexp! '*/style/*'
+              
+                              
+        class Style < Page
+          GOOD_ID = '/style/'  
+          ROUTE = '/style.css'
+        end
+
+        class SubStyle < Page
+          GOOD_ID = 'style/**'  # == '/style/**/' (boundary slashes are optional: se == /se == se/ == /se/ )
+          ROUTE = false    # nil - default action, false - dont create output file
+          FILTER = :sass   # or @@filters['sass'] = :sass # filter by ext
+        end
+      """
+    And a file named "content/style/index.erb" with:
+      """
+      <%= (+item).children.map(&:compiled_content).join "\n" %>
+      """
+    And a file named "content/style/one.sass" with:
+      """
+      html
+        color: red
+      """
+    And a file named "content/style/two.sass" with:
+      """
+      html
+        color: green
+      """
+    And a file named "content/style/three.sass" with:
+      """
+      html
+        color: blue
+      """
+    When I successfully compile it
+    Then input are the only files in "content" directory
+      And expected output are the only files in "output" directory
+      Then the file "output/style.css" should contain exactly:
+        """
+        html {
+          color: red; }
+
+        html {
+          color: blue; }
+
+        html {
+          color: green; }
+
+        """

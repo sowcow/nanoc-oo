@@ -3,27 +3,35 @@ def is_binary_file? file
   File.binary? file
 end
 
-module Hidable
-  def route *a
-    return nil if hidden?
-    super
-  end
+# module Hidable
+#   def route *a
+#     return nil if hidden?
+#     super
+#   end
 
-  # def compile *a
-  #   return nil if hidden?
-  #   super
-  # end
+#   # def compile *a
+#   #   return nil if hidden?
+#   #   super
+#   # end
 
-  private
-  def hidden?
-  #  item[:hidden] == true
-  end
-end
+#   private
+#   def hidden?
+#   #  item[:hidden] == true
+#   end
+# end
 
 module PageDefaults
   def route
-    identifier.chop + (!html?? ".#{ item[:extension] }" : '/index.html')
+    return nil if self.class::ROUTE == false
+    self.class::ROUTE or identifier.chop + (html?? '/index.html' : ".#{extension}")
   end
+
+  #def item_path
+  #  identifier[%r|(/.*/).*?/|]
+  #end
+  #def item_name
+  #  identifier[%r|/.*(/.*?/)|]
+  #end
 
   def compile_children context, items_context
     children(items_context).each do |child|
@@ -48,13 +56,17 @@ module PageDefaults
   end
   
   def compile context
-    filter context
+    apply_filter context
     apply_layout context
     after_compile context
   end
 
-  def filter context
-    context.filter @@filters[last_extension] if @@filters[last_extension]
+  def apply_filter context
+    context.filter filter if filter
+  end
+  def filter
+    return self.class::FILTER if self.class::FILTER
+    return @@filters[last_extension] if @@filters[last_extension]
   end
   def apply_layout context
     context.layout layout if layout
@@ -99,14 +111,16 @@ module PageDefaults
   end  
   
   def extension
-    item[:extension] or self.class::EXT
+    self.class::EXT or item[:extension] or ''
   end
   
   def last_extension
     extension[/[.](.+?)$/, 1] or extension
   end
   
-  EXT = ''
+  FILTER = nil
+  ROUTE = nil
+  EXT = nil
   CSS_EXTENSIONS = 'css|sass|scss'
   HTML_EXTENSIONS = 'html|htm|slim|haml|md'
   PRIORITY = 0
@@ -115,7 +129,7 @@ end
 
 class Page
   include PageDefaults
-  include Hidable
+  # include Hidable
   attr_reader :item
 
   def initialize item
@@ -148,8 +162,22 @@ class Page
   end
   
   def self.accept? identifier
-    return false unless mask = self::GOOD_ID
+    return false unless mask = good_id
     identifier =~ mask ? true : false  
+  end
+
+  def self.good_id
+    id = self::GOOD_ID
+    case id
+    when String
+      id.gsub!('**','.+')   # any level
+      id.gsub!('*','[^/]+') # one level
+      id = "/#{id}" unless id[0] == '/'
+      id = "#{id}/" unless id[-1] == '/'
+      /^#{id}$/
+    else
+      id
+    end
   end
   
   def representation
