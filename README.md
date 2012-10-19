@@ -30,6 +30,8 @@
 1. extract methods from step definitions?
 1. layout in a class << !
 1. decouple specs
+1. comments -> specs
+1. improve rspec tables?
 1. ...
 
 ## notes:
@@ -67,3 +69,4 @@
    * raw_content
    * EXT = , ID=nil, Page.create, ...
  * (+item).parent?
+ * GOOD_ID= '*/some/**'
