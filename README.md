@@ -1,6 +1,8 @@
-# Nanoc::Oo
+# NanocOO
 
-TODO: Write a gem description
+TODO: Write a gem description 
+TODO: Write a gem description 
+TODO: Write a gem description 
 
 ## Installation
 
