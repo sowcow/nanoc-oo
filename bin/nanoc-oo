@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'nanoc-oo'
+NanocOO.create_site(ARGV[0])
