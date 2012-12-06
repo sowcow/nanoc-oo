@@ -6,10 +6,10 @@ require 'nanoc-oo/version'
 Gem::Specification.new do |gem|
   gem.name          = "nanoc-oo"
   gem.version       = NanocOO::VERSION
-  gem.authors       = ["TODO: Write your name"]
-  gem.email         = ["TODO: Write your email address"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.authors       = ['Alexander K']
+  gem.email         = ['xpyro@ya.ru']
+  gem.description   = %q{ with this you can map classes to directories and use inheritance in your nanoc site }
+  gem.summary       = %q{ nanoc wrapper with OO taste }
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
