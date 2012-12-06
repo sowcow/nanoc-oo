@@ -1,5 +1,5 @@
 def wrap
-  require 'FileUtils'
+  require 'fileutils'
   FileUtils.cp_r "#{WRAP}/.", SITE
 end
 

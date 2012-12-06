@@ -20,6 +20,9 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cucumber'
   gem.add_development_dependency 'aruba'
+  gem.add_development_dependency 'slim'
+  gem.add_development_dependency 'nokogiri'
+  gem.add_development_dependency 'kramdown'
 
   gem.add_dependency 'nanoc'
 

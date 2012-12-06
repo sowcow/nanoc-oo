@@ -52,7 +52,7 @@ describe '=>items configuration through classes' do
         before do
           full_name = "#{ SITE }/content/#{ name }.png"
           TempFiles.create full_name, &->{}
-          save_png_image full_name
+          #save_png_image full_name
         end
         
         let(:good){ "#{ SITE }/output/#{ name }.png" }

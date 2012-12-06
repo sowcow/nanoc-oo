@@ -1,5 +1,7 @@
+require 'nanoc-oo'
+
 SITE = 'tmp'
-WRAP = 'wrapper'
+WRAP = NanocOO.wrapper
 
 def require_here dir
   Dir["#{dir}/*.rb"].each {|file| require File.expand_path file }

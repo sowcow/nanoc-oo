@@ -1,4 +1,4 @@
-require 'FileUtils'
+require 'fileutils'
 
 def clean
   rm_rf SITE
