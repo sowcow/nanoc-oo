@@ -54,9 +54,17 @@ Feature: paginate article example
       | output/article/1/index.html |
       | output/article/2/index.html |
       | output/article/3/index.html |
-    And the file "output/article/index.html" should contain exactly:
+    And the file "output/article/index.html" should contain:
       """
-      <a href="1/">First Header</a><a href="2/">Second Header</a><a href="3/">Third Header</a>
+      <a href="1/">First Header
+      """
+    And the file "output/article/index.html" should contain:
+      """
+      <a href="2/">Second Header
+      """
+    And the file "output/article/index.html" should contain:
+      """
+      <a href="3/">Third Header
       """
     And the file "output/article/1/index.html" should contain exactly:
       """

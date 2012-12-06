@@ -65,15 +65,18 @@ Feature: composite file example
     When I successfully compile it
     Then input are the only files in "content" directory
       And expected output are the only files in "output" directory
-      Then the file "output/style.css" should contain exactly:
+      Then the file "output/style.css" should contain:
         """
         html {
           color: red; }
-
-        html {
-          color: blue; }
-
+        """
+      Then the file "output/style.css" should contain:
+        """
         html {
           color: green; }
-
+        """
+      Then the file "output/style.css" should contain:
+        """
+        html {
+          color: blue; }
         """

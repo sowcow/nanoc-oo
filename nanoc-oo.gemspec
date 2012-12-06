@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'slim'
   gem.add_development_dependency 'nokogiri'
   gem.add_development_dependency 'kramdown'
+  gem.add_development_dependency 'sass'
 
   gem.add_dependency 'nanoc'
   gem.add_dependency 'thor'

@@ -2,6 +2,10 @@ Step '[>$] ?nanoc *' do |command|
   step "I successfully run `ruby -S nanoc #{command}`"
 end
 
+Step '[>$] ?nanoc-oo *' do |command|
+  step "I successfully run `ruby -S nanoc-oo #{command}`"
+end
+
 Given 'I have a default nanoc site' do
   step '$ nanoc create-site site'
   step 'I cd to "site"'
