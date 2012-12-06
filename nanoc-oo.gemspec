@@ -5,7 +5,7 @@ require 'nanoc-oo/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "nanoc-oo"
-  gem.version       = Nanoc::Oo::VERSION
+  gem.version       = NanocOO::VERSION
   gem.authors       = ["TODO: Write your name"]
   gem.email         = ["TODO: Write your email address"]
   gem.description   = %q{TODO: Write a gem description}
@@ -16,4 +16,12 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+
+  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'cucumber'
+  gem.add_development_dependency 'aruba'
+
+  gem.add_dependency 'nanoc'
+
+  gem.executables << 'nanoc-oo'
 end

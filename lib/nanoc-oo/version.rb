@@ -1,5 +1,3 @@
-module Nanoc
-  module Oo
-    VERSION = "0.0.1"
-  end
+module NanocOO
+  VERSION = "0.0.1"
 end
