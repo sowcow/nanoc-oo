@@ -25,6 +25,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'kramdown'
 
   gem.add_dependency 'nanoc'
+  gem.add_dependency 'thor'
 
   gem.executables << 'nanoc-oo'
 end

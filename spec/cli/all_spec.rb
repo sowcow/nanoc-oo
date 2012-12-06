@@ -5,16 +5,36 @@ describe NanocOO do
 
   let(:temp){ 'temp' }
   let(:site){ "#{temp}/site" }
-  after :all do
+  before :each do
+    rm_rf temp
+  end  
+  after :each do
     rm_rf temp
   end
 
-  it 'creates site with nanoc' do # stateful
+  it 'creates site with nanoc' do
     `nanoc-oo #{site}`
     File.should exist join(site,'Rules')
+    Dir[join(site,'content')].count.should > 0
+  end
+
+  it 'creates site with nanoc (w/o cli)' do
+    NanocOO.create_site site
+    File.should exist join(site,'Rules')
+    Dir[join(site,'content')].count.should > 0
+  end
+
+  it 'creates site without content if --blank specified' do
+    `nanoc-oo #{site} --blank`
+    File.should exist join(site,'Rules')
+    Dir[join(site,'content')].count.should == 0
   end
 
   describe 'created site' do
+    before do
+      `nanoc-oo #{site}`
+    end
+
     it 'is wrapped' do
       read(join(site,'Rules')).should == read(join(NanocOO.wrapper,'Rules'))
     end

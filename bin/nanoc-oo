@@ -1,4 +1,17 @@
 #!/usr/bin/env ruby
-
 require 'nanoc-oo'
-NanocOO.create_site(ARGV[0])
+require 'thor/group'
+
+class CLI < Thor::Group
+  argument :name, type: :string, desc: 'directory name for new site'
+  class_option :blank, type: :boolean, default: false, desc: 'without content files'
+  desc 'creates nanoc site with object-oriented wrapper'
+
+  def create_it
+    NanocOO.create_site name, options[:blank]
+  end  
+
+  def self.banner; super.sub('cli ','') end
+end
+
+ARGV.empty?? CLI.usage : CLI.start
