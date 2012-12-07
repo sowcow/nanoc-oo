@@ -18,7 +18,7 @@ module NanocOO
   end
 
   def delete_content dir
-    rm_r File.join(dir,'content')
+    rm_r Dir.glob File.join(dir,'content','*')
   end
 
   extend self

@@ -15,19 +15,20 @@ describe NanocOO do
   it 'creates site with nanoc' do
     `nanoc-oo #{site}`
     File.should exist join(site,'Rules')
-    Dir[join(site,'content')].count.should > 0
+    content_files.count.should > 0
   end
 
   it 'creates site with nanoc (w/o cli)' do
     NanocOO.create_site site
     File.should exist join(site,'Rules')
-    Dir[join(site,'content')].count.should > 0
+    content_files.count.should > 0
   end
 
   it 'creates site without content if --blank specified' do
     `nanoc-oo #{site} --blank`
     File.should exist join(site,'Rules')
-    Dir[join(site,'content')].count.should == 0
+    content_files.count.should == 0
+    Dir.should exist join(site,'content')
   end
 
   describe 'created site' do
@@ -53,5 +54,8 @@ BEGIN{
   end
   def read *a
     File.read *a
+  end
+  def content_files
+    Dir[join(site,'content','*')]
   end
 }
