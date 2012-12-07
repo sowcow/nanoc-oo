@@ -1,4 +1,5 @@
 require "nanoc-oo/version"
+require 'fileutils'
 
 module NanocOO
   include FileUtils
