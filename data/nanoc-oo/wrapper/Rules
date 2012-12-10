@@ -113,3 +113,5 @@ end
 # FIXME "if" just for specs, to prevent crashes
 #
 Builder.build! root(fake.items, classes), self, fake if fake.items.count > 0
+
+__END__

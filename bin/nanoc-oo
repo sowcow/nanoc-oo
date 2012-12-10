@@ -14,5 +14,4 @@ class CLI < Thor::Group
   def self.banner; super.sub('cli ','') end
 end
 
-ARGV << '--help' if ARGV.empty?
 CLI.start
