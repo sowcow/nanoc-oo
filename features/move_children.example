@@ -1,4 +1,3 @@
-@wip
 Feature: move children items
 
   Background:
@@ -36,6 +35,10 @@ Feature: move children items
 
         class ThatItem < Page
           GOOD_ID = 'one/*'
+          
+          def route *a
+            super.sub 'one', 'two' # more declarative way to do this needed
+          end
         end
       """
     When I successfully compile it

@@ -1,3 +1,4 @@
+# move to cucumber feature?
 require 'nanoc-oo'
 
 describe NanocOO do
@@ -39,12 +40,6 @@ describe NanocOO do
     it 'is wrapped' do
       read(join(site,'Rules')).should == read(join(NanocOO.wrapper,'Rules'))
     end
-
-    context 'terminal outputs' do
-      specify 'nanoc output'
-      specify 'wrapping info'
-      specify '--help?'
-    end if false
   end
 end
 

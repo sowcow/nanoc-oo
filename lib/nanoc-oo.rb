@@ -5,7 +5,7 @@ module NanocOO
   include FileUtils
   
   def create_site name, blank=false
-    `nanoc create-site #{name}`
+    system "nanoc create-site #{name}"
     wrap name
     delete_content name if blank
   end
