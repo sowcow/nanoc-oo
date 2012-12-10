@@ -31,3 +31,7 @@ Feature: command line interface
     When $ nanoc-oo thesite
     Then the output should contain "force"
     Then the output should contain "classes"
+
+  Scenario: it hides site name in paths
+    When $ nanoc-oo MySite123
+    Then the output should not contain "MySite123/"

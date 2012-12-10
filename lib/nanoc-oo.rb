@@ -35,7 +35,9 @@ module NanocOO
   end
 
   def wrap dir
-    copier = ForcedDataCopier.new.copy 'wrapper', dir
+    Dir.chdir dir do    
+      ForcedDataCopier.new.copy 'wrapper', '.'
+    end
 
     #prepend_file join(dir,'Rules'), File.read(join(wrapper,'Rules'))
     #directory 'lib', dir
@@ -53,8 +55,10 @@ module NanocOO
   end
 
   def delete_content dir
-    Dir.glob(join(dir,'content','*')).each do |supposedly_file|
-      Force.remove_file supposedly_file
+    Dir.chdir dir do
+      Dir['content/*'].each do |supposedly_file|
+        Force.remove_file supposedly_file
+      end
     end
   end
 
